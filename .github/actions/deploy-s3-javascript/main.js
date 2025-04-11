@@ -3,7 +3,7 @@ const github = require("@actions/github");
 const exec = require("@actions/exec");
 
 function run() {
-  core.notice("THis is JS log");
+  core.notice("This is JS log");
 }
 
 run();
