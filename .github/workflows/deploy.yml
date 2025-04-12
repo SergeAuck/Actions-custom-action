@@ -71,3 +71,6 @@ jobs:
           bucket: serg-test-bucket-six
           bucket-region: us-east-1
           dist-folder: ./dist
+      - name: Output information
+        run: |
+          echo "Live URL: ${{steps.deploy.outputs.website-url}}"
