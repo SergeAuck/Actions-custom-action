@@ -50,6 +50,9 @@ jobs:
           name: dist-files
           path: dist
   deploy:
+    permissions:
+      id-token: write
+      contents: read
     needs: build
     runs-on: ubuntu-latest
     steps:
@@ -62,11 +65,13 @@ jobs:
           path: ./dist
       - name: Output contents
         run: ls
+      - name: Get AWS Permissions
+        uses: aws-actions/configure-aws-credentials
+        with:
+          role-to-assume: arn:aws:iam::359765043127:role/GitHubActions
+          aws-region: us-east-1
       - name: Deploy site
         uses: ./.github/actions/deploy-s3-docker
-        env:
-          AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
-          AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECURITY_ACCESS_KEY}}
         with:
           bucket: serg-test-bucket-six
           bucket-region: us-east-1
